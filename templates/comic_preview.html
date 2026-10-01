@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        {{ story.title }} - ComicCraft
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="/static/style.css"
+    >
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+    <div class="preview-header">
+
+        <h1>
+            {{ story.title }}
+        </h1>
+
+        <p>
+            Your ComicCraft story is ready!
+        </p>
+
+    </div>
+
+
+    <form
+        action="/export-pdf"
+        method="post"
+    >
+
+        <!-- Comic title -->
+
+        <input
+            type="hidden"
+            name="comic_title"
+            value="{{ story.title }}"
+        >
+
+
+        {% for panel in comic %}
+
+        <div class="panel">
+
+            <div class="panel-number">
+
+                Panel {{ panel.panel }}
+
+            </div>
+
+
+            <h2>
+                {{ panel.title }}
+            </h2>
+
+
+            <div class="comic-section">
+
+                <h3>
+                    Narration
+                </h3>
+
+                <p>
+                    {{ panel.narration }}
+                </p>
+
+            </div>
+
+
+            <div class="comic-section">
+
+                <h3>
+                    Dialogue
+                </h3>
+
+                <p class="dialogue">
+                    {{ panel.dialogue }}
+                </p>
+
+            </div>
+
+
+            <div class="comic-section">
+
+                <h3>
+                    Visual Description
+                </h3>
+
+                <p>
+                    {{ panel.image_prompt }}
+                </p>
+
+            </div>
+
+
+            <!-- Hidden values sent to PDF exporter -->
+
+            <input
+                type="hidden"
+                name="panel_titles"
+                value="{{ panel.title }}"
+            >
+
+            <input
+                type="hidden"
+                name="panel_narrations"
+                value="{{ panel.narration }}"
+            >
+
+            <input
+                type="hidden"
+                name="panel_dialogues"
+                value="{{ panel.dialogue }}"
+            >
+
+            <input
+                type="hidden"
+                name="panel_images"
+                value="{{ panel.image_prompt }}"
+            >
+
+        </div>
+
+        {% endfor %}
+
+
+        <button
+            type="submit"
+            class="download-button"
+        >
+            Create PDF
+        </button>
+
+    </form>
+
+
+    <a
+        href="/"
+        class="back-link"
+    >
+        Create Another Comic
+    </a>
+
+</div>
+
+</body>
+
+</html>
